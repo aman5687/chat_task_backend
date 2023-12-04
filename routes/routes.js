@@ -58,6 +58,7 @@ router.post("/register", async (req, res) => {
             if (error.code === 11000 && error.keyPattern && error.keyPattern.email === 1) {
                 res.status(409).json({ message: "Email is already in use, please enter a unique email" }); // Use 409 Conflict
             } else {
+                console.log(error);
                 res.status(500).json({ message: "Error in catch" }); // Use 500 Internal Server Error
             }
         }
@@ -104,7 +105,23 @@ router.post("/login", async (req, res) => {
 
 });
 
+// api to show all users
 
+
+router.get("/allUsers", async (req, res)=>{
+    User.find()
+    .exec()
+    .then((data)=>{
+        res.status(200).json({data});
+    })
+    .catch((error)=>{
+        res.status(401).json({error});
+    })
+})
+
+
+
+// ends here
 
 
 
